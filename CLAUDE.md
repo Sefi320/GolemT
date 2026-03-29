@@ -146,6 +146,7 @@ remotes::install_github("risktoollib/RTL")
 
 ## Key Design Decisions Already Made
 
+- **`utils_contracts.R` is not needed** — contract codes are passed directly as strings (e.g., `"CL"`) to filter functions. No lookup table or label helpers required.
 - **Data is pre-loaded** — no "fetch" button. All data loads on app start. Tab selection triggers calculations.
 - **GARCH only for single selected contract** — not all 36 at once (too slow). Rolling SD used for the full term structure volatility surface.
 - **Synchronized animation** on co-dynamics tab — one play button controls PADD map and CL price chart simultaneously

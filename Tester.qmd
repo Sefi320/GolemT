@@ -127,3 +127,14 @@ arrow::write_feather(cmt_clean, "inst/extdata/fred_data.feather")
 
 ```
 
+
+
+```{r}
+
+market_events %>%
+  dplyr::filter(commodities %in% c("CL","All"))
+
+
+```
+
+
