@@ -1,0 +1,25 @@
+---
+title: "Final Project"
+author: "Soumer"
+format: html
+editor: source
+---
+
+
+
+
+
+```{r}
+library(RTL)
+library(tidyverse)
+
+```
+
+
+
+```{r}
+unique(RTL::dflong$series)
+
+
+```
+
