@@ -1,0 +1,96 @@
+<h2>What's the overall visual direction?</h2>
+<p class="subtitle">Your audience is senior Risk Management / Trading professionals. Pick the vibe that fits.</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="dark-terminal" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0e1a;padding:16px;font-family:monospace;min-height:140px;border-radius:6px;">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">
+        <div style="width:80px;height:6px;background:#00d4aa;border-radius:3px;"></div>
+        <div style="width:50px;height:6px;background:#1a2744;border-radius:3px;"></div>
+        <div style="width:60px;height:6px;background:#1a2744;border-radius:3px;"></div>
+        <div style="width:40px;height:6px;background:#1a2744;border-radius:3px;"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:#111827;border:1px solid #1e3a5f;border-radius:4px;padding:8px;">
+          <div style="color:#00d4aa;font-size:10px;margin-bottom:4px;">WTI CRUDE</div>
+          <div style="color:#ffffff;font-size:18px;font-weight:bold;">$78.42</div>
+          <div style="color:#00d4aa;font-size:10px;">▲ +1.2%</div>
+        </div>
+        <div style="background:#111827;border:1px solid #1e3a5f;border-radius:4px;padding:8px;">
+          <div style="color:#7c8db0;font-size:10px;margin-bottom:4px;">VOLATILITY</div>
+          <div style="color:#f59e0b;font-size:18px;font-weight:bold;">24.7%</div>
+          <div style="color:#7c8db0;font-size:10px;">30d rolling</div>
+        </div>
+      </div>
+      <div style="margin-top:8px;background:#111827;border:1px solid #1e3a5f;border-radius:4px;height:32px;display:flex;align-items:center;padding:0 8px;">
+        <div style="height:2px;background:linear-gradient(90deg,#00d4aa,#3b82f6,#f59e0b);width:100%;border-radius:1px;"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Dark Terminal</h3>
+      <p>Bloomberg / trading desk aesthetic. Dark background, teal + amber accents, monospace data. Screams "I know what I'm doing." High contrast for data-heavy charts.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="dark-premium" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f0f23;padding:16px;min-height:140px;border-radius:6px;">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">
+        <div style="width:80px;height:6px;background:linear-gradient(90deg,#6366f1,#8b5cf6);border-radius:3px;"></div>
+        <div style="width:50px;height:6px;background:#1e1e3f;border-radius:3px;"></div>
+        <div style="width:60px;height:6px;background:#1e1e3f;border-radius:3px;"></div>
+        <div style="width:40px;height:6px;background:#1e1e3f;border-radius:3px;"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:linear-gradient(135deg,#1e1e3f,#16213e);border:1px solid #6366f133;border-radius:4px;padding:8px;">
+          <div style="color:#818cf8;font-size:10px;margin-bottom:4px;">WTI CRUDE</div>
+          <div style="color:#ffffff;font-size:18px;font-weight:bold;">$78.42</div>
+          <div style="color:#34d399;font-size:10px;">▲ +1.2%</div>
+        </div>
+        <div style="background:linear-gradient(135deg,#1e1e3f,#16213e);border:1px solid #6366f133;border-radius:4px;padding:8px;">
+          <div style="color:#818cf8;font-size:10px;margin-bottom:4px;">VOLATILITY</div>
+          <div style="color:#ffffff;font-size:18px;font-weight:bold;">24.7%</div>
+          <div style="color:#a78bfa;font-size:10px;">30d rolling</div>
+        </div>
+      </div>
+      <div style="margin-top:8px;background:linear-gradient(135deg,#1e1e3f,#16213e);border:1px solid #6366f133;border-radius:4px;height:32px;display:flex;align-items:center;padding:0 8px;">
+        <div style="height:2px;background:linear-gradient(90deg,#6366f1,#8b5cf6,#ec4899);width:100%;border-radius:1px;"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Dark Premium</h3>
+      <p>Deep navy + indigo gradient. More refined than terminal — feels like a high-end fintech product. Purple/violet accents. Looks modern and intentional.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="light-institutional" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#f8fafc;padding:16px;min-height:140px;border-radius:6px;border:1px solid #e2e8f0;">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">
+        <div style="width:80px;height:6px;background:#1e40af;border-radius:3px;"></div>
+        <div style="width:50px;height:6px;background:#e2e8f0;border-radius:3px;"></div>
+        <div style="width:60px;height:6px;background:#e2e8f0;border-radius:3px;"></div>
+        <div style="width:40px;height:6px;background:#e2e8f0;border-radius:3px;"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:4px;padding:8px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+          <div style="color:#64748b;font-size:10px;margin-bottom:4px;">WTI CRUDE</div>
+          <div style="color:#0f172a;font-size:18px;font-weight:bold;">$78.42</div>
+          <div style="color:#059669;font-size:10px;">▲ +1.2%</div>
+        </div>
+        <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:4px;padding:8px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+          <div style="color:#64748b;font-size:10px;margin-bottom:4px;">VOLATILITY</div>
+          <div style="color:#0f172a;font-size:18px;font-weight:bold;">24.7%</div>
+          <div style="color:#64748b;font-size:10px;">30d rolling</div>
+        </div>
+      </div>
+      <div style="margin-top:8px;background:#ffffff;border:1px solid #e2e8f0;border-radius:4px;height:32px;display:flex;align-items:center;padding:0 8px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+        <div style="height:2px;background:linear-gradient(90deg,#1e40af,#0ea5e9,#06b6d4);width:100%;border-radius:1px;"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Light Institutional</h3>
+      <p>Clean white + navy blue. Looks like a Goldman Sachs / CME research report. Professional, easy to read. Safe choice — no one ever got fired for picking white with blue.</p>
+    </div>
+  </div>
+
+</div>
