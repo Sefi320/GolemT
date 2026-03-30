@@ -3,7 +3,8 @@
     "allow": [
       "WebSearch",
       "WebFetch(domain:www.eia.gov)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(Rscript -e \"library\\(arrow\\); df <- arrow::read_feather\\('C:/Users/soume/OneDrive/Documents/UNIVERSITY/UofA/25-26/Winter 2026/FIN 451/Golem App/GolemT/inst/extdata/eia_data.feather'\\); print\\(unique\\(df$role\\)\\)\")"
     ]
   }
 }

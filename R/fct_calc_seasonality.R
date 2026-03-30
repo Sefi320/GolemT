@@ -1,8 +1,8 @@
 #' calc_seasonality
 #'
-#' @description A fct function
+#' @description A fct function to get the STL decomposition for a df of prices
 #'
-#' @return The return value, if any, from executing the function.
+#' @return A matrix to be fed into plotly for creating a heatmap of seasonality
 #'
 #' @noRd
 

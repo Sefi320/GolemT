@@ -13,6 +13,7 @@ editor: source
 
 ```{r}
 library(RTL)
+library(here)
 
 ```
 
@@ -63,7 +64,8 @@ library(RTL)
     "refinery_runs",      "PET.WGIRIUS2.W",                   "Refinery Runs (kb/d)",
     "cl_demand",          "PET.WRPUPUS2.W",                   "Total Petroleum Product Supplied (Mbbl/d)",
     "ho_demand",          "PET.WDIUPUS2.W",                   "Distillate Product Supplied (Mbbl/d)",
-    "rb_exports",         "PET.W_EPM0F_EEX_NUS-Z00_MBBLD.W", "Motor Gasoline Exports (Mbbl/d)"
+    "rb_exports",         "PET.W_EPM0F_EEX_NUS-Z00_MBBLD.W", "Motor Gasoline Exports (Mbbl/d)",
+    "ng_storage",         "NG.NW2_EPG0_SWO_R48_BCF.W",       "US Natural Gas Storage (Bcf)"
   )
 
   eia_data <- purrr::pmap_dfr(tickers, function(role, series_id, label) {
@@ -72,7 +74,7 @@ library(RTL)
   }) %>% 
     dplyr::filter(date >= as.Date("2007-01-02"))
 
-  arrow::write_feather(eia_data, "inst/extdata/eia_data.feather")
+  arrow::write_feather(eia_data, here::here("inst/extdata/eia_data.feather"))
 
 
 ```
@@ -123,7 +125,7 @@ cmt_clean <- cmt_data %>%
 
 
 
-arrow::write_feather(cmt_clean, "inst/extdata/fred_data.feather")
+arrow::write_feather(cmt_clean, here::here("inst/extdata/fred_data.feather"))
 
 ```
 
