@@ -131,8 +131,11 @@ arrow::write_feather(cmt_clean, "inst/extdata/fred_data.feather")
 
 ```{r}
 
-market_events %>%
-  dplyr::filter(commodities %in% c("CL","All"))
+x <- RTL::dflong %>% dplyr::filter(series == "CL01")
+x <- RTL::returns(df = x, retType = "rel", period.return = 1, spread = TRUE)
+x <- RTL::rolladjust(x = x, commodityname = c("cmewti"), rolltype = c("Last.Trade"))
+
+summary(RTL::garch(x = x, out = "fit"))
 
 
 ```

@@ -9,11 +9,11 @@
 
 calc_daily_returns <- function(df, method = "log") {
     df %>%
-      dplyr::group_by(series) %>%
-      dplyr::arrange(date, .by_group = TRUE) %>%
-      dplyr::mutate(
-        daily_return = if (method == "log") {
-          log(value / dplyr::lag(value))
+    dplyr::group_by(series) %>%
+    dplyr::arrange(date, .by_group = TRUE) %>%
+    dplyr::mutate(
+      daily_return = if (method == "log") {
+        log(value / dplyr::lag(value))
         } else {
           value - dplyr::lag(value)
         }
