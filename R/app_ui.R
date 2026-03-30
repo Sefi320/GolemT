@@ -73,15 +73,6 @@ app_ui <- function(request) {
               tags$br(),
               "how energy markets price risk across the curve."
             ),
-            tags$span(
-              style = paste(
-                "display: inline-block; background: #1e40af;",
-                "color: #ffffff; font-size: 12px; font-weight: 600;",
-                "padding: 10px 24px; border-radius: 4px;",
-                "letter-spacing: 0.05em; text-transform: uppercase;"
-              ),
-              "Explore Markets \u2192"
-            )
           )
         )
       ),
