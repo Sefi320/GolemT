@@ -6,11 +6,15 @@
 #' @noRd
 app_ui <- function(request) {
   tagList(
-    # Leave this function for adding external resources
     golem_add_external_resources(),
-    # Your application UI logic
-    fluidPage(
-      golem::golem_welcome_page() # Remove this line to start building your UI
+    bslib::page_navbar(
+      title = "GolemT — Energy Market Dynamics",
+      bslib::nav_panel("Crude Oil (WTI)",  mod_cl_ui("cl")),
+      bslib::nav_panel("Natural Gas",       mod_ng_ui("ng")),
+      bslib::nav_panel("Brent Crude",       mod_brn_ui("brn")),
+      bslib::nav_panel("RBOB Gasoline",     mod_rb_ui("rb")),
+      bslib::nav_panel("Heating Oil",       mod_ho_ui("ho")),
+      bslib::nav_panel("CMT Yields",        mod_cmt_ui("cmt"))
     )
   )
 }
