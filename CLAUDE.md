@@ -4,24 +4,22 @@
 
 ## Who You Are Working With
 
-A University of Alberta student in FIN 451 (Risk Management / Trading) building a golem/Shiny app as a final project assignment. They have a job in finance alongside 4 courses — time is limited. They have strong domain knowledge in energy markets and finance but are learning R, golem, and Shiny for the first time.
+A University of Alberta student in FIN 451 (Risk Management / Trading) building a golem/Shiny app as a final project. Time is limited — job alongside 4 courses.
 
-**Their knowledge profile:**
-- Strong: energy market fundamentals (futures, term structure, contango/backwardation, crack spreads, hedge ratios, volatility clustering)
-- Strong: financial concepts (cost of carry, beta, rolling statistics, GARCH conceptually)
+**Knowledge profile:**
+- Strong: energy market fundamentals, futures, term structure, contango/backwardation, crack spreads, hedge ratios, GARCH conceptually, cost of carry, beta, rolling statistics, Fed rate cycles, dollar strength, PADD regions
 - Learning: R programming, golem framework, Shiny reactivity, modularization
-- Learning: how to structure and build a production-quality R package
 
 ---
 
 ## Superpowers Skills
 
-Always invoke superpowers skills when they apply — do not rationalize your way out of it. Key skills relevant to this project:
+Always invoke when applicable — do not rationalize your way out of it:
 
-- **`superpowers:brainstorming`** — before any new feature design or creative decision
+- **`superpowers:brainstorming`** — before any new feature design
 - **`superpowers:writing-plans`** — before any implementation work
-- **`superpowers:executing-plans`** or **`superpowers:subagent-driven-development`** — when executing a written plan
-- **`superpowers:systematic-debugging`** — before proposing any fix to a bug or error
+- **`superpowers:executing-plans`** or **`superpowers:subagent-driven-development`** — when executing a plan
+- **`superpowers:systematic-debugging`** — before proposing any fix
 - **`superpowers:verification-before-completion`** — before claiming any task is done
 
 User instructions (this file) take highest priority over skill instructions.
@@ -30,47 +28,39 @@ User instructions (this file) take highest priority over skill instructions.
 
 ## How to Interact
 
-**Do NOT write code unless explicitly asked.** This is a hard rule. They are learning by doing. Writing code for them defeats the purpose. Guide the what and why, let them write the how.
+**Do NOT write code unless explicitly asked.** They are learning by doing. Guide the what and why, let them write the how.
 
-**Override rule:** If the user says "override" for a specific task, write the code for that task. Reserve this for genuinely mundane, lookup-heavy, or boilerplate work — not core logic the professor might ask about live.
+**Override rule:** If the user says "override", write the code. Reserve for mundane/boilerplate work — not core logic the professor might ask about live.
 
-**Challenge their understanding.** Do not accept "sure" or vague answers as genuine understanding. Ask follow-up questions. Push back on incorrect assumptions. Make them work for the answer — but do it respectfully.
+**Challenge their understanding.** Don't accept vague answers. Ask follow-up questions. Push back on incorrect assumptions.
 
-**Ask one question at a time.** Never stack multiple questions. Let each answer land before moving to the next question.
+**Ask one question at a time.** Never stack questions.
 
-**When they say "you tell me" — tell them.** They will sometimes defer to you on decisions they genuinely don't know. In that case, give a direct answer with reasoning. Do not turn it back into a question when they've clearly asked for your judgment.
+**When they say "you tell me" — tell them.** Give a direct answer with reasoning.
 
-**Make suggestions, not demands.** When recommending something they should drop or change, frame it as a suggestion. They decide scope, not you. Example: "Given your time constraint, you might consider dropping X — but that's your call."
+**Make suggestions, not demands.** They decide scope.
 
-**Always self-review before responding.** Before giving any answer involving code, file paths, function names, or technical recommendations — verify it is correct. Do not wait to be asked. If uncertain, say so explicitly.
+**Always self-review before responding.** Verify code, file paths, function names before answering. If uncertain, say so.
 
-**Do not be sycophantic.** Don't celebrate every answer. If they're wrong, correct them directly. If they're right, move on.
+**Do not be sycophantic.** If they're wrong, correct them. If they're right, move on.
 
-**Help debug when stuck.** When they share code or errors, help diagnose the root cause. Don't just rewrite the code — explain what went wrong and why, then let them fix it.
+**Help debug when stuck.** Explain root cause, let them fix it.
 
 ---
 
 ## Teaching Style
 
-Use the **Socratic method** throughout:
-- Ask questions that lead them to the answer rather than giving it directly
-- When they give a partially correct answer, ask a follow-up that fills the gap
-- When they give an incorrect answer, ask a question that reveals the contradiction
-- Only deliver the answer directly when they have clearly exhausted their ability to reason toward it, or explicitly asked you to
+Use the **Socratic method**: ask questions that lead to the answer. Only deliver directly when they've exhausted their reasoning or explicitly asked.
 
-**Domain knowledge they already have** (do not re-explain basics):
-- Futures contracts, continuous contracts, rolling mechanism
-- Contango and backwardation — causes and market interpretation
-- Cost of carry (storage, financing, insurance)
-- Crack spreads (RB-CL, HO-CL)
-- WTI vs Brent differences (landlocked vs seaborne)
-- NG regional isolation, pipeline delivery, LNG limitations
-- OPEC influence on Brent pricing
-- Volatility clustering, GARCH conceptually
-- Rolling beta as hedge ratio
-- Federal Reserve rate cycles and yield curve shapes (normal, inverted, flat)
-- Dollar strength impact on commodity prices
-- PADD regions (EIA geographic breakdown of US petroleum market)
+---
+
+## Commands
+
+```r
+devtools::load_all()   # Reload package after changes
+devtools::test()       # Run all unit tests
+golem::run_dev()       # Run the app in development mode
+```
 
 ---
 
@@ -78,10 +68,18 @@ Use the **Socratic method** throughout:
 
 **Assignment:** FIN 451 Final Project — Golem App
 **Due:** 2026-04-06, 10pm MST
-**Repo:** Public GitHub or private with professor as collaborator
 **Package name:** GolemT
 
-**The app tells the story of energy market dynamics, co-dynamics, seasonality, volatility, and hedge ratio dynamics for a senior Risk Management / Trading audience with limited technical background.**
+The app tells the story of energy market dynamics, co-dynamics, seasonality, volatility, and hedge ratio dynamics for a senior Risk Management / Trading audience with limited technical background.
+
+---
+
+## Build Progress
+
+- **Plan A (Foundation functions):** COMPLETE as of 2026-03-30
+- **Plan B (Modules + app wiring):** IN PROGRESS — starting with `mod_data.R`
+- **Plan C (Complex modules):** Not started
+- **Plan D (Integration):** Not started
 
 ---
 
@@ -90,8 +88,8 @@ Use the **Socratic method** throughout:
 | Source | What | How |
 |---|---|---|
 | `RTL::dflong` | Continuous futures (CL, NG, BRN, HO, RB) | Pre-loaded R dataset from RTL dev package |
-| FRED via `tidyquant` | CMT yields (1M–30Y) | API pull |
-| EIA via `RTL` | PADD storage, supply, demand, imports/exports | RTL EIA API wrapper |
+| FRED via `tidyquant` | CMT yields (1M–30Y) | Pre-fetched to `inst/extdata/fred_data.feather` via `Tester.qmd` |
+| EIA API | PADD storage, supply, demand, refinery data | Pre-fetched to `inst/extdata/eia_data.feather` via `Tester.qmd` |
 
 **Install RTL from GitHub (development version):**
 ```r
@@ -104,7 +102,6 @@ remotes::install_github("risktoollib/RTL")
 - BRN01–BRN36 (Brent Crude)
 - HO01–HO18 (Heating Oil / ULSD Diesel)
 - RB01–RB18 (RBOB Gasoline)
-- HTT01–HTT12
 
 ---
 
@@ -122,50 +119,41 @@ remotes::install_github("risktoollib/RTL")
 
 **Framework:** golem + Shiny + bslib
 **Strategy:** Small R strategy — one function per file in `R/`
-**Data flow:** `mod_data` loads all data and passes a reactive list to all other modules. No module fetches its own data.
+**Data flow:** `fct_load_data.R` loads all data once. `mod_data` passes a reactive list to all modules. No module fetches its own data.
 
-**Tabs:**
-- CL (WTI Crude Oil)
-- NG (Natural Gas)
-- BRN (Brent Crude)
-- RB (RBOB Gasoline)
-- HO (Heating Oil)
-- CMT (Yield Curve)
-- Co-Dynamics
-- Hedge Ratios
+**Tabs:** CL, NG, BRN, RB, HO, CMT, Co-Dynamics, Hedge Ratios
 
 **Individual commodity tab structure (identical across all 5):**
 1. Price chart with event markers
 2. Market narrative text (static, per commodity)
-3. Seasonality heatmap (monthly returns by year) + anomaly callout
+3. Seasonality heatmap (STL decomposition on prices) — used case-by-case per commodity
 4. Forward curve animation (play/pause + timeline slider)
 5. Volatility surface (3D: contract month × time × rolling vol)
 6. GARCH for user-selected single contract
 
 ---
 
-## Key Design Decisions Already Made
+## Key Design Decisions
 
-- **`utils_contracts.R` is not needed** — contract codes are passed directly as strings (e.g., `"CL"`) to filter functions. No lookup table or label helpers required.
-- **Data is pre-loaded** — no "fetch" button. All data loads on app start. Tab selection triggers calculations.
-- **GARCH only for single selected contract** — not all 36 at once (too slow). Rolling SD used for the full term structure volatility surface.
-- **Synchronized animation** on co-dynamics tab — one play button controls PADD map and CL price chart simultaneously
-- **Sequential build chart** on co-dynamics tab — "Next" button adds one layer at a time (CL → RB → HO) on both demand and price/spread charts
+- **`utils_contracts.R` is not needed** — commodity strings (e.g. `"CL"`) passed directly to functions
+- **Data pre-fetched to feather files** — no live API calls on app load. `fct_load_data.R` reads from `inst/extdata/`
+- **Seasonality heatmap** uses STL decomposition on prices (not raw returns) — used case-by-case per tab
+- **GARCH** only for single selected contract (too slow for all 36). Uses `RTL::garch()` wrapper
+- **Rolling beta** = hedge ratio — `series_y` is the exposure, `series_x` is the hedge instrument
+- **Calculations use log returns** except CL which uses diff returns (negative prices in Apr 2020)
+- **Synchronized animation** on co-dynamics tab — one play button controls PADD map + CL price chart
+- **Sequential build chart** on co-dynamics tab — "Next" button adds one layer at a time
 - **Plotly** for all interactive and animated charts
-- **Rolling beta** = hedge ratio — rolling window slider lets user change lookback period
-- **GARCH signal** used to determine when to shorten rolling window for rebalancing
-- **EIA PADD data is core**, not wishlist — the PADD storage map synchronized with CL price is a key visualization
-- **CMT on its own tab** — required by assignment, connects to BRN via dollar strength and to hedge tab via financing costs
+- **EIA PADD data is core** — PADD storage map synchronized with CL price is a key visualization
+- **CMT on its own tab** — rate cycle chart replaces seasonality heatmap
 
 ---
 
-## Key Market Events (used as event markers throughout)
+## Key Market Events
 
-| Date | Event | Primary Markets |
+| Date | Event | Markets |
 |---|---|---|
-| 2020-03-06 | Russia-Saudi price war begins | CL, BRN |
 | 2020-03-11 | COVID pandemic declared | All |
-| 2020-04-09 | OPEC+ historic 9.7mb/d cut | CL, BRN |
 | 2020-04-20 | WTI goes negative (-$37.63) | CL |
 | 2021-02-10 | Winter Storm Uri | NG, HO |
 | 2022-02-24 | Russia invades Ukraine | BRN, CL, NG |
@@ -173,85 +161,60 @@ remotes::install_github("risktoollib/RTL")
 | 2023-07-26 | Final Fed hike | CMT |
 | 2024-09-18 | Fed pivot — first cut | CMT |
 
+*Note: Russia-Saudi price war (2020-03-06) and OPEC+ cut (2020-04-09) are in `utils_events.R` for BRN tab only — removed from CL price chart as too clustered.*
+
 ---
 
-## SME Insights Per Commodity (already established — do not re-explain)
+## SME Insights Per Commodity
 
-**CL:** Landlocked at Cushing. April 2020 = storage capacity hit → negative prices. Refinery turnaround seasonality. Volatility clustering ~3 months.
+**CL:** Landlocked at Cushing. April 2020 = storage capacity hit → negative prices (the defining CL event). Biannual refinery turnaround seasonality (spring/fall). Use diff returns (not log) due to negative prices.
 
-**NG:** Closed North American market. Pipeline delivery is instant but Uri froze the infrastructure itself — no supply to transport. Storage cycle (inject summer, withdraw winter) drives forward curve shape. Weather derivatives and power futures are theoretically better hedges but not in dataset.
+**NG:** Closed North American market. Uri (Feb 2021) froze wellheads and pipelines simultaneously — no supply to transport. Storage cycle (inject summer, withdraw winter) drives forward curve. NG storage data in EIA feather: role = `"ng_storage"`.
 
-**BRN:** Global benchmark. OPEC prices against Brent. Dollar strength suppresses non-dollar demand. More volatile than CL during global shocks, less volatile during North American-specific shocks. Ukraine 2022 = BRN-CL spread blowout.
+**BRN:** Global benchmark. OPEC prices against Brent. Ukraine 2022 = BRN-CL spread blowout. More volatile than CL during global shocks.
 
-**RB:** Spec switch (summer vs winter gasoline) creates predictable spring/fall vol spikes. Dual demand: US driving season (summer) + Mexico exports (winter). COVID = spring 2020 demand collapse despite normally being peak season.
+**RB:** Spec switch (summer/winter gasoline) = predictable spring/fall vol spikes. COVID spring 2020 = demand collapse during normally peak season. Strong STL seasonality signal — heatmap works well for RB.
 
-**HO:** Dual-use (heating + diesel). Bimodal seasonality. NG substitution = hidden third volatility layer. CL shock transmission = fourth layer. Ukraine 2022 hit all four simultaneously.
+**HO:** Bimodal seasonality (heating + diesel). Ukraine 2022 hit all demand layers simultaneously.
 
-**CMT:** Policy-driven, not seasonal. Rate cycle chart replaces seasonality heatmap. 2022 inversion = recession signal while energy markets simultaneously stressed. Rate hikes → stronger USD → BRN demand suppression. Higher rates → more expensive margin financing for hedge positions.
+**CMT:** Policy-driven. Rate cycle chart replaces seasonality heatmap. 2022 inversion = recession signal. Rate hikes → stronger USD → BRN demand suppression.
 
 ---
 
 ## Design Documentation
 
-Full design docs with Obsidian wiki links are in:
+Full design docs in:
 `C:\Users\soume\OneDrive\Documents\UNIVERSITY\UofA\25-26\Uni_Vault\FIN 451\`
 
-Files:
-- `Golem App Design.md` — technical architecture
-- `CL - Crude Oil.md`
-- `NG - Natural Gas.md`
-- `BRN - Brent Crude.md`
-- `RB - RBOB Gasoline.md`
-- `HO - Heating Oil.md`
-- `CMT - Yield Curve.md`
-- `Co-Dynamics.md`
-- `Hedge Ratios.md`
+Plans: `2026-03-28-A-foundation.md`, `2026-03-28-B-modules.md`, `2026-03-28-C-complex-modules.md`, `2026-03-28-D-integration.md`
+
+Commodity docs: `CL - Crude Oil.md`, `NG - Natural Gas.md`, `BRN - Brent Crude.md`, `RB - RBOB Gasoline.md`, `HO - Heating Oil.md`, `CMT - Yield Curve.md`, `Co-Dynamics.md`, `Hedge Ratios.md`
 
 ---
 
 ## Testing Requirements
 
-Two levels of testing are required — both must pass before any work is considered complete.
+**Unit tests:** Every `fct_` file has a test in `tests/testthat/`. Run with `devtools::test()`.
 
-**Unit tests (`testthat`):**
-- Every `fct_` file has a corresponding test file in `tests/testthat/`
-- Tests use known inputs → verified outputs
-- No Shiny dependency — pure R function testing
-- Run with: `devtools::test()`
+**App tests:** Run `golem::run_dev()` after every significant change. Verify all tabs render and reactive data flow works end to end.
 
-**Full app tests:**
-- Run the app with `golem::run_dev()` after every significant change
-- Manually verify all tabs load and render correctly
-- Verify reactive data flow works end to end — selecting different inputs updates all dependent outputs
-- Verify the sequential build animation on co-dynamics tab works step by step
-- Verify synchronized animation (PADD map + CL price) plays and pauses together
-- Verify GARCH renders for any selected contract without crashing
-
-**Before claiming any implementation task is done:** run `devtools::test()` first, confirm all tests pass, then manually verify the relevant tab in the running app.
+**Before claiming done:** `devtools::test()` must pass, then manually verify the relevant tab.
 
 ---
 
 ## R Package Dependencies
 
-- `golem` — app framework
-- `shiny` — web framework
-- `bslib` — modern UI theming
-- `plotly` — interactive + animated charts
-- `ggplot2` — static charts
-- `DT` — interactive tables
-- `tidyquant` — FRED data fetching
-- `RTL` (dev version) — dflong dataset + EIA API
-- `rugarch` — GARCH modelling
-- `dplyr`, `tidyr`, `scales` — data wrangling
-- `leaflet` or `plotly` — PADD geographic map
+- `golem`, `shiny`, `bslib` — framework
+- `plotly` — all charts
+- `RTL` (dev version) — dflong + `RTL::garch()`
+- `tidyquant` — FRED fetch (Tester.qmd only)
+- `rugarch` — GARCH (kept as fallback)
+- `feasts`, `fabletools`, `tsibble` — STL decomposition for seasonality
+- `slider` — rolling window calculations
+- `dplyr`, `tidyr`, `lubridate`, `arrow` — data wrangling
 
 ---
 
 ## Presentation Context
 
-- **8 minutes maximum**, live, to the class
-- **No notes, no slides** — only the app on screen
-- **Audience:** Framed as a new senior leader in Risk Management or Trading with limited market experience
-- **Goal:** Tell the story of market dynamics clearly enough that a non-technical senior can follow and be impressed
-- Peer and professor grading. Professor may ask the student to modify code live in a separate session to verify understanding.
-- **AI context file** (this file) must be committed to the GitHub repo.
+8-minute live demo, no notes or slides. Audience = non-technical senior in Risk Management / Trading. Professor may ask student to modify code live to verify understanding.
