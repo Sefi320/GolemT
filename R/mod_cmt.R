@@ -3,13 +3,28 @@
 #' @export
 mod_cmt_ui <- function(id) {
   ns <- NS(id)
-  tagList(
-    h2("CMT Yields"),
-    plotly::plotlyOutput(ns("curve_animation")),
-    uiOutput(ns("narrative")),
-    plotly::plotlyOutput(ns("rate_cycle_chart")),
-    plotly::plotlyOutput(ns("rolling_vol_chart")),
-    plotly::plotlyOutput(ns("cmt_brn_chart"))
+  div(
+    style = "display: flex; flex-direction: column; gap: 20px; padding: 24px;",
+    bslib::card(
+      bslib::card_header("Yield Curve Animation"),
+      plotly::plotlyOutput(ns("curve_animation"))
+    ),
+    bslib::card(
+      bslib::card_header("Market Narrative"),
+      uiOutput(ns("narrative"))
+    ),
+    bslib::card(
+      bslib::card_header("Rate Cycle"),
+      plotly::plotlyOutput(ns("rate_cycle_chart"))
+    ),
+    bslib::card(
+      bslib::card_header("Rolling Volatility"),
+      plotly::plotlyOutput(ns("rolling_vol_chart"))
+    ),
+    bslib::card(
+      bslib::card_header("CMT vs Brent"),
+      plotly::plotlyOutput(ns("cmt_brn_chart"))
+    )
   )
 }
 
