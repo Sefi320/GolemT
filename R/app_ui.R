@@ -17,7 +17,11 @@ app_ui <- function(request) {
         secondary = "#94a3b8",
         "card-bg" = "#273548",
         "card-border-color" = "transparent",
-        "card-box-shadow" = "0 2px 12px rgba(0,0,0,0.25)"
+        "card-box-shadow" = "0 2px 12px rgba(0,0,0,0.25)",
+        "navbar-dark-color" = "rgba(255,255,255,0.75)",
+        "navbar-dark-hover-color" = "#ffffff",
+        "navbar-dark-active-color" = "#ffffff",
+        "navbar-dark-brand-color" = "#ffffff"
       ),
       bg = "#0f172a",
       bslib::nav_panel(
