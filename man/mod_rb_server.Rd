@@ -4,7 +4,7 @@
 \alias{mod_rb_server}
 \title{RB Module Server}
 \usage{
-mod_rb_server(id)
+mod_rb_server(id, app_data)
 }
 \arguments{
 \item{id}{Module namespace id}

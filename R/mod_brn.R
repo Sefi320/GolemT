@@ -43,7 +43,7 @@ mod_brn_ui <- function(id) {
 #' BRN Module Server
 #' @param id Module namespace id
 #' @export
-mod_brn_server <- function(id) {
+mod_brn_server <- function(id,app_data) {
   moduleServer(id, function(input, output, session) {
     output$price_chart          <- plotly::renderPlotly(shinipsum::random_ggplotly())
     output$brn_cl_spread_chart  <- plotly::renderPlotly(shinipsum::random_ggplotly())

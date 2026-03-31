@@ -4,7 +4,7 @@
 \alias{mod_cmt_server}
 \title{CMT Module Server}
 \usage{
-mod_cmt_server(id)
+mod_cmt_server(id, app_data)
 }
 \arguments{
 \item{id}{Module namespace id}

@@ -43,7 +43,7 @@ mod_ng_ui <- function(id) {
 #' NG Module Server
 #' @param id Module namespace id
 #' @export
-mod_ng_server <- function(id) {
+mod_ng_server <- function(id,app_data) {
   moduleServer(id, function(input, output, session) {
     output$price_chart         <- plotly::renderPlotly(shinipsum::random_ggplotly())
     output$narrative           <- renderUI(HTML(shinipsum::random_text(nwords = 60)))

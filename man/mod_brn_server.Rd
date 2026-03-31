@@ -4,7 +4,7 @@
 \alias{mod_brn_server}
 \title{BRN Module Server}
 \usage{
-mod_brn_server(id)
+mod_brn_server(id, app_data)
 }
 \arguments{
 \item{id}{Module namespace id}

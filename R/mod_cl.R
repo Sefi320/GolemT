@@ -39,10 +39,13 @@ mod_cl_ui <- function(id) {
 #' CL Module Server
 #' @param id Module namespace id
 #' @export
-mod_cl_server <- function(id) {
+mod_cl_server <- function(id,app_data) {
   moduleServer(id, function(input, output, session) {
-    output$price_chart        <- plotly::renderPlotly(shinipsum::random_ggplotly())
+
+    output$price_chart        <- plotly::renderPlotly(plot_price(filter_futures(app_data()$prices, "CL", contracts = 1)))
+
     output$narrative          <- renderUI(HTML(shinipsum::random_text(nwords = 60)))
+
     output$seasonality_heatmap <- plotly::renderPlotly(shinipsum::random_ggplotly())
     output$curve_animation    <- plotly::renderPlotly(shinipsum::random_ggplotly())
     output$vol_surface        <- plotly::renderPlotly(shinipsum::random_ggplotly())

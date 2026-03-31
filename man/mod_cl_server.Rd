@@ -4,7 +4,7 @@
 \alias{mod_cl_server}
 \title{CL Module Server}
 \usage{
-mod_cl_server(id)
+mod_cl_server(id, app_data)
 }
 \arguments{
 \item{id}{Module namespace id}

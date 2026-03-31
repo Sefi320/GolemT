@@ -4,7 +4,7 @@
 \alias{mod_ng_server}
 \title{NG Module Server}
 \usage{
-mod_ng_server(id)
+mod_ng_server(id, app_data)
 }
 \arguments{
 \item{id}{Module namespace id}

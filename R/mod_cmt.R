@@ -31,7 +31,7 @@ mod_cmt_ui <- function(id) {
 #' CMT Module Server
 #' @param id Module namespace id
 #' @export
-mod_cmt_server <- function(id) {
+mod_cmt_server <- function(id,app_data) {
   moduleServer(id, function(input, output, session) {
     output$curve_animation  <- plotly::renderPlotly(shinipsum::random_ggplotly())
     output$narrative        <- renderUI(HTML(shinipsum::random_text(nwords = 60)))

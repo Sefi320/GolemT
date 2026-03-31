@@ -4,7 +4,7 @@
 \alias{mod_ho_server}
 \title{HO Module Server}
 \usage{
-mod_ho_server(id)
+mod_ho_server(id, app_data)
 }
 \arguments{
 \item{id}{Module namespace id}

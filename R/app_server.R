@@ -5,10 +5,11 @@
 #' @import shiny
 #' @noRd
 app_server <- function(input, output, session) {
-  mod_cl_server("cl")
-  mod_ng_server("ng")
-  mod_brn_server("brn")
-  mod_rb_server("rb")
-  mod_ho_server("ho")
-  mod_cmt_server("cmt")
+  app_data <- mod_data_server("data")
+  mod_cl_server("cl",app_data)
+  mod_ng_server("ng",app_data)
+  mod_brn_server("brn",app_data)
+  mod_rb_server("rb",app_data)
+  mod_ho_server("ho",app_data)
+  mod_cmt_server("cmt",app_data)
 }

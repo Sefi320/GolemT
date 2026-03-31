@@ -44,7 +44,7 @@ mod_rb_ui <- function(id) {
 #' RB Module Server
 #' @param id Module namespace id
 #' @export
-mod_rb_server <- function(id) {
+mod_rb_server <- function(id,app_data) {
   moduleServer(id, function(input, output, session) {
     output$price_chart         <- plotly::renderPlotly(shinipsum::random_ggplotly())
     output$narrative           <- renderUI(HTML(shinipsum::random_text(nwords = 60)))

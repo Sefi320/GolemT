@@ -39,7 +39,7 @@ mod_ho_ui <- function(id) {
 #' HO Module Server
 #' @param id Module namespace id
 #' @export
-mod_ho_server <- function(id) {
+mod_ho_server <- function(id,app_data) {
   moduleServer(id, function(input, output, session) {
     output$price_chart         <- plotly::renderPlotly(shinipsum::random_ggplotly())
     output$narrative           <- renderUI(HTML(shinipsum::random_text(nwords = 60)))
