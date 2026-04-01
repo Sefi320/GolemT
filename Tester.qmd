@@ -141,3 +141,13 @@ summary(RTL::garch(x = x, out = "fit"))
 ```
 
 
+```{r}
+
+tidyquant::tq_get("DX-Y.NYB", get = "stock.prices")
+
+tidyquant::tq_get("UUP", get = "stock.prices")
+
+```
+
+
+
