@@ -10,7 +10,6 @@
 calc_seasonality <- function(prices_df, series_name) {
 
   monthly <- prices_df %>%
-    dplyr::filter(series == series_name) %>%
     dplyr::arrange(date) %>%
     tsibble::as_tsibble(key = series, index = date) %>%
     tsibble::group_by_key() %>%

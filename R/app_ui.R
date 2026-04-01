@@ -8,7 +8,7 @@ app_ui <- function(request) {
   tagList(
     golem_add_external_resources(),
     bslib::page_navbar(
-      title = "Eenergy Dynamics",
+      title = "Energy Dynamics",
       theme = bslib::bs_theme(
         version = 5,
         bg = "#1e293b",
