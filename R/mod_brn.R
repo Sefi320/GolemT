@@ -10,10 +10,6 @@ mod_brn_ui <- function(id) {
       plotly::plotlyOutput(ns("price_chart"))
     ),
     bslib::card(
-      bslib::card_header("BRN–CL Spread"),
-      plotly::plotlyOutput(ns("brn_cl_spread_chart"))
-    ),
-    bslib::card(
       bslib::card_header("Market Narrative"),
       uiOutput(ns("narrative"))
     ),
@@ -23,7 +19,7 @@ mod_brn_ui <- function(id) {
     ),
     bslib::card(
       bslib::card_header("Forward Curve"),
-      plotly::plotlyOutput(ns("curve_animation"))
+      shiny::imageOutput(ns("curve_animation"))
     ),
     bslib::card(
       bslib::card_header("Volatility Surface"),
@@ -32,10 +28,8 @@ mod_brn_ui <- function(id) {
     bslib::card(
       bslib::card_header("GARCH"),
       selectInput(ns("contract_select"), "Contract",
-                  choices = paste0("BRN0", 1:9)),
-      sliderInput(ns("rolling_window"), "Rolling Window",
-                  min = 30, max = 252, value = 60, step = 30),
-      plotly::plotlyOutput(ns("garch_chart"))
+                  choices =  1:9),
+      shiny::plotOutput(ns("garch_chart"))
     )
   )
 }
@@ -45,12 +39,41 @@ mod_brn_ui <- function(id) {
 #' @export
 mod_brn_server <- function(id,app_data) {
   moduleServer(id, function(input, output, session) {
-    output$price_chart          <- plotly::renderPlotly(shinipsum::random_ggplotly())
-    output$brn_cl_spread_chart  <- plotly::renderPlotly(shinipsum::random_ggplotly())
+
+    output$price_chart <- plotly::renderPlotly(
+      plot_price(
+        filter_futures(app_data()$prices, "BRN", contracts = 1),
+        cmdty = "BRN",
+        dxy = dplyr::filter(app_data()$cmt_data, role == "dxy")
+      ))
+
     output$narrative            <- renderUI(HTML(shinipsum::random_text(nwords = 60)))
-    output$seasonality_heatmap  <- plotly::renderPlotly(shinipsum::random_ggplotly())
-    output$curve_animation      <- plotly::renderPlotly(shinipsum::random_ggplotly())
-    output$vol_surface          <- plotly::renderPlotly(shinipsum::random_ggplotly())
-    output$garch_chart          <- plotly::renderPlotly(shinipsum::random_ggplotly())
+
+    output$seasonality_heatmap <- plotly::renderPlotly(
+      plot_seasonality(
+        calc_seasonality(
+          filter_futures(app_data()$prices,contracts = 1),
+          "BRN")))
+
+    output$curve_animation <- shiny::renderImage({
+      list(src = app_sys("extdata/brn_curve.gif"), contentType = "image/gif")
+    }, deleteFile = FALSE)
+
+    outputOptions(output, "curve_animation", suspendWhenHidden = FALSE)
+
+    output$vol_surface <- plotly::renderPlotly(
+      plot_vol_surface(app_data()$prices, "BRN", method = "log",
+                       start = "2024-01-01", end = "2024-03-26"))
+
+    output$garch_chart <- shiny::renderPlot(calc_garch(
+      calc_daily_returns(
+        filter_futures(
+          app_data()$prices,
+          cmdty = "BRN",
+          contracts = input$contract_select), method = "log") %>%
+        dplyr::filter(
+          date >= as.Date("2017-07-01"),
+          date <= as.Date("2023-07-31")),
+      series_name = paste0("BRN0", input$contract_select)))
   })
 }

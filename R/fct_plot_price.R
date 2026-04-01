@@ -9,8 +9,7 @@
 #'
 #'
 #'
-
-plot_price <- function(x, cmdty = "CL") {
+plot_price <- function(x, cmdty = "CL", dxy = NULL) {
 
   events <- market_events %>%
     dplyr::filter(stringr::str_detect(commodities, paste0(cmdty, "|All")))
@@ -40,14 +39,30 @@ plot_price <- function(x, cmdty = "CL") {
     )
   })
 
-  x %>%
+  p <- x %>%
     plotly::plot_ly(x = ~date, y = ~value, type = "scatter", mode = "lines",
+                    name = cmdty,
                     line = list(color = "steelblue")) %>%
     plotly::layout(
       shapes      = shapes,
       annotations = annotations,
       xaxis       = list(title = ""),
       yaxis       = list(title = "Price")
-    ) %>%
-    return()
+    )
+
+  if (!is.null(dxy)) {
+    p <- p %>%
+      plotly::add_lines(
+        data = dxy,
+        x = ~date, y = ~price,
+        name = "DXY",
+        line = list(color = "#f59e0b", dash = "dot"),
+        yaxis = "y2"
+      ) %>%
+      plotly::layout(
+        yaxis2 = list(title = "DXY", overlaying = "y", side = "right")
+      )
+  }
+
+  return(p)
 }

@@ -94,7 +94,9 @@ tickers <- c(
   "DGS7",   # 7-Year
   "DGS10",  # 10-Year
   "DGS20",  # 20-Year
-  "DGS30"   # 30-Year
+  "DGS30",  # 30-Year
+  "DTWEXBGS" # USD Strength index
+
 )
 
 from <- "2007-01-02"
@@ -117,13 +119,12 @@ cmt_clean <- cmt_data %>%
       symbol == "DGS10" ~ 10,
       symbol == "DGS20" ~ 20,
       symbol == "DGS30" ~ 30),
-
     rate = price / 100) %>%
   tidyr::drop_na()
 
 
 
-arrow::write_feather(cmt_clean, "inst/extdata/fred_data.feather")
+ arrow::write_feather(cmt_clean, "inst/extdata/fred_data.feather")
 
 ```
 

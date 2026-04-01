@@ -96,36 +96,44 @@ tickers <- c(
   "DGS7",   # 7-Year
   "DGS10",  # 10-Year
   "DGS20",  # 20-Year
-  "DGS30"   # 30-Year
+  "DGS30",   # 30-Year
+  "DTWEXBGS" # USD Strength
 )
 
 from <- "2007-01-02"
 
-cmt_data <- tidyquant::tq_get(
-  tickers,
-  get = "economic.data",
-  from = from)
+ cmt_data <- tidyquant::tq_get(
+    tickers,
+    get = "economic.data",
+    from = from)
 
-cmt_clean <- cmt_data %>%
-  dplyr::mutate(
-    maturity = case_when(
-      symbol == "DGS1MO" ~ 1/12,
-      symbol == "DGS3MO" ~ 3/12,
-      symbol == "DGS6MO" ~ 6/12,
-      symbol == "DGS1" ~ 1,
-      symbol == "DGS2" ~ 2,
-      symbol == "DGS5" ~ 5,
-      symbol == "DGS7" ~ 7,
-      symbol == "DGS10" ~ 10,
-      symbol == "DGS20" ~ 20,
-      symbol == "DGS30" ~ 30),
+  dxy_clean <- cmt_data %>%
+    dplyr::filter(symbol == "DTWEXBGS") %>%
+    dplyr::mutate(role = "dxy", maturity = NA_real_, rate = NA_real_) %>%
+    dplyr::select(symbol, date, price, maturity, rate, role)
 
-    rate = price / 100) %>%
-  tidyr::drop_na()
+  cmt_clean <- cmt_data %>%
+    dplyr::filter(symbol != "DTWEXBGS") %>%
+    dplyr::mutate(
+      maturity = case_when(
+        symbol == "DGS1MO" ~ 1/12,
+        symbol == "DGS3MO" ~ 3/12,
+        symbol == "DGS6MO" ~ 6/12,
+        symbol == "DGS1"   ~ 1,
+        symbol == "DGS2"   ~ 2,
+        symbol == "DGS5"   ~ 5,
+        symbol == "DGS7"   ~ 7,
+        symbol == "DGS10"  ~ 10,
+        symbol == "DGS20"  ~ 20,
+        symbol == "DGS30"  ~ 30),
+      rate = price / 100,
+      role = "cmt") %>%
+    tidyr::drop_na()
+
+  fred_data <- dplyr::bind_rows(cmt_clean, dxy_clean)
 
 
-
-arrow::write_feather(cmt_clean, here::here("inst/extdata/fred_data.feather"))
+arrow::write_feather(fred_data, here::here("inst/extdata/fred_data.feather"))
 
 ```
 
