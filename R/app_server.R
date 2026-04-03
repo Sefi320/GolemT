@@ -12,4 +12,6 @@ app_server <- function(input, output, session) {
   mod_rb_server("rb",app_data)
   mod_ho_server("ho",app_data)
   mod_cmt_server("cmt",app_data)
+  mod_codynamics_server("codynamics",app_data)
+  mod_hedgeratios_server("hedgeratios",app_data)
 }

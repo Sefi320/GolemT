@@ -1,8 +1,8 @@
 #' plot_seasonality
 #'
-#' @description A fct function
+#' @description Takes matrix input from calc seaonality and plots it using plotly heatmap
 #'
-#' @return The return value, if any, from executing the function.
+#' @return Heatmap by plotly
 #'
 #' @noRd
 
@@ -14,7 +14,7 @@ plot_seasonality <- function(seasonality_matrix) {
     x          = colnames(seasonality_matrix),
     y          = rownames(seasonality_matrix),
     type       = "heatmap",
-    colorscale = "RdYlGn",
+    colorscale = "RdBu",
     reversescale = FALSE
   ) %>%
     plotly::layout(

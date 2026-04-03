@@ -81,7 +81,9 @@ app_ui <- function(request) {
       bslib::nav_panel("Brent Crude",       mod_brn_ui("brn")),
       bslib::nav_panel("RBOB Gasoline",     mod_rb_ui("rb")),
       bslib::nav_panel("Heating Oil",       mod_ho_ui("ho")),
-      bslib::nav_panel("CMT Yields",        mod_cmt_ui("cmt"))
+      bslib::nav_panel("CMT Yields",        mod_cmt_ui("cmt")),
+      bslib::nav_panel("Co-Dynamics",       mod_codynamics_ui("codynamics")),
+      bslib::nav_panel("Hedge Ratios",      mod_hedgeratios_ui("hedgeratios"))
     )
   )
 }

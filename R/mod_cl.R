@@ -14,6 +14,10 @@ mod_cl_ui <- function(id) {
       uiOutput(ns("narrative"))
     ),
     bslib::card(
+      bslib::card_header("EIA Crude Stocks vs 5-Year Average"),
+      plotly::plotlyOutput(ns("eia_storage_chart"))
+    ),
+    bslib::card(
       bslib::card_header("Seasonality"),
       plotly::plotlyOutput(ns("seasonality_heatmap"))
     ),
@@ -45,6 +49,10 @@ mod_cl_server <- function(id,app_data) {
                               filter_futures(app_data()$prices, "CL", contracts = 1)))
 
     output$narrative <- renderUI(HTML(shinipsum::random_text(nwords = 60)))
+
+    output$eia_storage_chart <- plotly::renderPlotly(
+      plot_storage_seasonality(app_data()$eia_data, role = "crude_stocks", y_label = "Mbbl")
+    )
 
     output$seasonality_heatmap <- plotly::renderPlotly(
       plot_seasonality(

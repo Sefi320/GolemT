@@ -21,7 +21,7 @@ calc_rolling_beta <- function(returns_df, series_x, series_y, window = 60) {
       rolling_beta = slider::slide2_dbl(
         .x = .data[[series_x]],
         .y = .data[[series_y]],
-        .f = ~ coef(lm(.y ~ .x))[2],
+        .f = ~ cov(.x, .y) / var(.x),
         .before = window - 1,
         .complete = TRUE
       )

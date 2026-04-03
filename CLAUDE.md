@@ -87,7 +87,7 @@ The app tells the story of energy market dynamics, co-dynamics, seasonality, vol
 
 | Source | What | How |
 |---|---|---|
-| `RTL::dflong` | Continuous futures (CL, NG, BRN, HO, RB) | Pre-loaded R dataset from RTL dev package |
+| `RTL::dflong` | Continuous futures (CL, NG, BRN, HO, RB, HTT) | Pre-loaded R dataset from RTL dev package |
 | FRED via `tidyquant` | CMT yields (1M–30Y) | Pre-fetched to `inst/extdata/fred_data.feather` via `Tester.qmd` |
 | EIA API | PADD storage, supply, demand, refinery data | Pre-fetched to `inst/extdata/eia_data.feather` via `Tester.qmd` |
 
@@ -102,6 +102,7 @@ remotes::install_github("risktoollib/RTL")
 - BRN01–BRN36 (Brent Crude)
 - HO01–HO18 (Heating Oil / ULSD Diesel)
 - RB01–RB18 (RBOB Gasoline)
+- HTT01–HTT12 (WTI Houston vs WTI Cushing differential — CME contract)
 
 ---
 
@@ -178,6 +179,8 @@ remotes::install_github("risktoollib/RTL")
 **HO:** Bimodal seasonality (heating + diesel). Ukraine 2022 hit all demand layers simultaneously.
 
 **CMT:** Policy-driven. Rate cycle chart replaces seasonality heatmap. 2022 inversion = recession signal. Rate hikes → stronger USD → BRN demand suppression.
+
+**HTT:** WTI Houston (Argus) vs. WTI (NYMEX) differential = cost to move a barrel from landlocked Cushing to Houston export terminals. HTT > 0 means Houston at a premium. Widens when Cushing pipelines are constrained or storage fills. Used in Co-Dynamics Panel 2 to decompose BRN-CL spread: adjusted spread = BRN − CL − HTT = true Brent premium over WTI Houston, stripping out transport friction.
 
 ---
 
