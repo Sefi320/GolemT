@@ -6,19 +6,19 @@ mod_codynamics_ui <- function(id) {
   div(
     style = "display: flex; flex-direction: column; gap: 20px; padding: 24px;",
 
-    # Panel 1: PADD 2 Storage vs CL Price
+
     bslib::card(
       bslib::card_header("Cushing Storage vs WTI Price — COVID 2020"),
       plotly::plotlyOutput(ns("padd2_cl_chart"))
     ),
 
-    # Panel 2: BRN-CL Spread (HTT-adjusted)
+
     bslib::card(
       bslib::card_header("BRN-CL Spread — Ukraine 2022"),
       plotly::plotlyOutput(ns("brn_cl_spread"))
     ),
 
-    # Panel 3 + Panel 5 share rolling window slider
+
     bslib::card(
       bslib::card_header("Rolling Window"),
       shiny::sliderInput(
@@ -32,13 +32,11 @@ mod_codynamics_ui <- function(id) {
       )
     ),
 
-    # Panel 3: BRN vs NG Rolling Volatility
     bslib::card(
       bslib::card_header("BRN vs NG Rolling Volatility — Ukraine 2022"),
       plotly::plotlyOutput(ns("brn_ng_vol"))
     ),
 
-    # Panel 5: NG-HO Substitution
     bslib::card(
       bslib::card_header("NG-HO Rolling Correlation — Winter Storm Uri 2021"),
       plotly::plotlyOutput(ns("ng_ho_cor")),
@@ -55,7 +53,7 @@ mod_codynamics_ui <- function(id) {
 mod_codynamics_server <- function(id, app_data) {
   moduleServer(id, function(input, output, session) {
 
-    # Panel 1: PADD 2 Storage vs CL Price
+
     output$padd2_cl_chart <- plotly::renderPlotly({
 
       padd2 <- app_data()$eia_data %>%
@@ -81,7 +79,7 @@ mod_codynamics_server <- function(id, app_data) {
           data = cl, x = ~date, y = ~cl,
           name = "CL01 (USD/bbl)",
           yaxis = "y2",
-          line  = list(color = "#C9A84C", width = 2)
+          line  = list(color = "orange", width = 2)
         ) %>%
         plotly::layout(
           shapes = list(
@@ -111,7 +109,7 @@ mod_codynamics_server <- function(id, app_data) {
         )
     })
 
-    # Panel 2: BRN-CL Spread (HTT-adjusted)
+
     output$brn_cl_spread <- plotly::renderPlotly({
 
       spread <- calc_htt_spread(app_data()$prices) %>%
@@ -132,7 +130,7 @@ mod_codynamics_server <- function(id, app_data) {
           name      = "BRN \u2212 CL (raw)",
           fill      = "tonexty",
           fillcolor = "rgba(150, 150, 150, 0.25)",
-          line      = list(color = "#aaaaaa", width = 2)
+          line      = list(color = "grey", width = 2)
         ) %>%
         plotly::layout(
           shapes = list(
@@ -153,7 +151,7 @@ mod_codynamics_server <- function(id, app_data) {
         )
     })
 
-    # Panel 3: BRN vs NG Rolling Volatility
+
     output$brn_ng_vol <- plotly::renderPlotly({
 
       brn_ret <- filter_futures(app_data()$prices, "BRN", contracts = 1) %>%
@@ -189,7 +187,7 @@ mod_codynamics_server <- function(id, app_data) {
         )
     })
 
-    # Panel 5: NG-HO Rolling Correlation
+
     output$ng_ho_cor <- plotly::renderPlotly({
 
       returns <- dplyr::bind_rows(
@@ -225,7 +223,7 @@ mod_codynamics_server <- function(id, app_data) {
         )
     })
 
-    # Panel 5: NG-HO Normalized Prices
+
     output$ng_ho_prices <- plotly::renderPlotly({
 
       base_date <- as.Date("2021-01-01")

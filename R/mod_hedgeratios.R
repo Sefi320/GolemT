@@ -58,7 +58,7 @@ mod_hedgeratios_server <- function(id, app_data) {
         calc_daily_returns(method = "diff")
     })
 
-    # --- Section 1: RB-CL rolling beta ---
+
     output$rb_cl_beta <- plotly::renderPlotly({
 
       beta <- calc_rolling_beta(rb_cl_returns(),
