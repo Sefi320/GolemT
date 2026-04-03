@@ -1,6 +1,6 @@
 #' HO Module UI
 #' @param id Module namespace id
-#' @export
+
 mod_ho_ui <- function(id) {
   ns <- NS(id)
   div(
@@ -36,7 +36,7 @@ mod_ho_ui <- function(id) {
 
 #' HO Module Server
 #' @param id Module namespace id
-#' @export
+
 mod_ho_server <- function(id,app_data) {
   moduleServer(id, function(input, output, session) {
 
@@ -44,7 +44,13 @@ mod_ho_server <- function(id,app_data) {
       plot_price(
         filter_futures(app_data()$prices, cmdty = "HO", contracts = 1)))
 
-    output$narrative           <- renderUI(HTML(shinipsum::random_text(nwords = 60)))
+    output$narrative <- renderUI(tags$ul(
+      tags$li("Heating Oil (ULSD) serves dual demand: residential heating in winter and diesel/jet fuel year-round for logistics, agriculture, and aviation. This creates a bimodal seasonal demand profile."),
+      tags$li("Ukraine 2022 hit every demand layer simultaneously — diesel for trucks and farming, heating for European households replacing Russian gas, and jet fuel recovering post-COVID. The price spike reflects all three."),
+      tags$li("The diesel crack spread (HO minus CL) is the key refinery output margin for middle distillates. It is structurally higher when geopolitical disruptions tighten European supply."),
+      tags$li("ULSD (ultra-low sulfur diesel) trades as a proxy for European gasoil. HO is more globally connected than WTI — European energy policy directly affects New York Harbor ULSD prices."),
+      tags$li("Bimodal seasonality: a winter heating peak and a spring/fall refinery maintenance trough. Weaker than RB because the industrial diesel component smooths the pure heating demand signal.")
+    ))
 
     output$seasonality_heatmap <- plotly::renderPlotly(
       plot_seasonality(

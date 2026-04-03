@@ -1,6 +1,6 @@
 #' CL Module UI
 #' @param id Module namespace id
-#' @export
+
 mod_cl_ui <- function(id) {
   ns <- NS(id)
   div(
@@ -12,10 +12,6 @@ mod_cl_ui <- function(id) {
     bslib::card(
       bslib::card_header("Market Narrative"),
       uiOutput(ns("narrative"))
-    ),
-    bslib::card(
-      bslib::card_header("EIA Crude Stocks vs 5-Year Average"),
-      plotly::plotlyOutput(ns("eia_storage_chart"))
     ),
     bslib::card(
       bslib::card_header("Seasonality"),
@@ -40,7 +36,7 @@ mod_cl_ui <- function(id) {
 
 #' CL Module Server
 #' @param id Module namespace id
-#' @export
+
 mod_cl_server <- function(id,app_data) {
   moduleServer(id, function(input, output, session) {
 
@@ -48,11 +44,14 @@ mod_cl_server <- function(id,app_data) {
                             plot_price(
                               filter_futures(app_data()$prices, "CL", contracts = 1)))
 
-    output$narrative <- renderUI(HTML(shinipsum::random_text(nwords = 60)))
+    output$narrative <- renderUI(tags$ul(
+      tags$li("WTI is priced at Cushing, Oklahoma — a landlocked pipeline hub with no direct access to export terminals. When Cushing fills, WTI weakens against Brent."),
+      tags$li("April 20, 2020: COVID demand collapse met physical storage capacity limits. WTI front month hit -$37.63/bbl — the first negative commodity price in history."),
+      tags$li("Biannual refinery turnaround (spring and fall) suppresses crude demand and creates predictable seasonal volatility spikes — visible in the seasonality heatmap."),
+      tags$li("The EIA storage chart shows PADD 2 inventory vs the 5-year seasonal average. Deviations above the average are bearish; below are bullish."),
+      tags$li("Volatility surface: the front contract (CL01) carries the most vol. Vol declines with maturity as supply/demand shocks are absorbed over time.")
+    ))
 
-    output$eia_storage_chart <- plotly::renderPlotly(
-      plot_storage_seasonality(app_data()$eia_data, role = "crude_stocks", y_label = "Mbbl")
-    )
 
     output$seasonality_heatmap <- plotly::renderPlotly(
       plot_seasonality(

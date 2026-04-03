@@ -1,6 +1,6 @@
 #' NG Module UI
 #' @param id Module namespace id
-#' @export
+
 mod_ng_ui <- function(id) {
   ns <- NS(id)
   div(
@@ -40,7 +40,7 @@ mod_ng_ui <- function(id) {
 
 #' NG Module Server
 #' @param id Module namespace id
-#' @export
+
 mod_ng_server <- function(id,app_data) {
   moduleServer(id, function(input, output, session) {
 
@@ -48,7 +48,13 @@ mod_ng_server <- function(id,app_data) {
       plot_price(
         filter_futures(app_data()$prices, "NG", contracts = 1)))
 
-    output$narrative           <- renderUI(HTML(shinipsum::random_text(nwords = 60)))
+    output$narrative <- renderUI(tags$ul(
+      tags$li("Henry Hub (Louisiana) is a purely North American market. Unlike crude, there is no meaningful LNG arbitrage to global prices in this dataset — North American supply and demand fully determines price."),
+      tags$li("Storage is the dominant driver: gas is injected in summer and withdrawn in winter, creating a steep seasonal forward curve. The storage chart shows how deviations from the 5-year average precede price moves."),
+      tags$li("Winter Storm Uri (Feb 2021): wellheads AND pipelines froze simultaneously — both supply and transport failed at the same time. Spot prices spiked over 10x. NG and HO became briefly correlated as heating demand surged."),
+      tags$li("Natural gas is the highest-volatility contract in the energy complex. A closed market plus extreme weather sensitivity means tail moves are larger and more frequent than crude."),
+      tags$li("The forward curve animation shows the injection/withdrawal cycle embedded in the curve shape — steep contango in summer, backwardation into winter withdrawal season.")
+    ))
 
     output$eia_storage_chart <- plotly::renderPlotly(
       plot_storage_seasonality(app_data()$eia_data, role = "ng_storage", y_label = "Bcf")

@@ -1,6 +1,6 @@
 #' RB Module UI
 #' @param id Module namespace id
-#' @export
+
 mod_rb_ui <- function(id) {
   ns <- NS(id)
   div(
@@ -36,7 +36,7 @@ mod_rb_ui <- function(id) {
 
 #' RB Module Server
 #' @param id Module namespace id
-#' @export
+
 mod_rb_server <- function(id,app_data) {
   moduleServer(id, function(input, output, session) {
 
@@ -44,7 +44,13 @@ mod_rb_server <- function(id,app_data) {
       plot_price(
         filter_futures(app_data()$prices, cmdty = "RB", contracts = 1)))
 
-    output$narrative <- renderUI(HTML(shinipsum::random_text(nwords = 60)))
+    output$narrative <- renderUI(tags$ul(
+      tags$li("RBOB gasoline is the reformulated blendstock used to produce summer-grade gasoline. A mandatory spec switch (summer/winter blend) in spring and fall creates predictable volatility spikes around the transition."),
+      tags$li("COVID spring 2020: demand collapsed exactly during the normally peak driving season. The seasonality heatmap shows an unprecedented March-April trough where a seasonal high should be — a stark anomaly."),
+      tags$li("RB has the strongest and most consistent seasonal signal in the petroleum complex. The STL decomposition captures it clearly — spring peaks and fall troughs are visible year after year."),
+      tags$li("The crack spread (RB minus CL) captures the refinery margin for gasoline production. It widens when driving demand outpaces crude supply and compresses during demand destruction events."),
+      tags$li("Forward curve shape: typically in contango into winter (low demand) and backwardation into summer (peak demand). The animation shows this seasonal shift in structure.")
+    ))
 
 
     output$seasonality_heatmap <- plotly::renderPlotly(

@@ -1,2 +1,9 @@
 .Rproj.user
 .Renviron
+tests/testthat/_snaps/
+
+# Development and planning files
+plans/
+docs/
+Tester.qmd
+GolemT.Rproj

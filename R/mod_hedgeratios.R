@@ -1,6 +1,6 @@
 #' Hedge Ratios Module UI
 #' @param id Module namespace id
-#' @export
+
 mod_hedgeratios_ui <- function(id) {
   ns <- NS(id)
   div(
@@ -33,7 +33,7 @@ mod_hedgeratios_ui <- function(id) {
 #' Hedge Ratios Module Server
 #' @param id Module namespace id
 #' @param app_data Reactive data list from mod_data_server
-#' @export
+
 mod_hedgeratios_server <- function(id, app_data) {
   moduleServer(id, function(input, output, session) {
 

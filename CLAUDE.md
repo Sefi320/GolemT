@@ -7,7 +7,7 @@
 A University of Alberta student in FIN 451 (Risk Management / Trading) building a golem/Shiny app as a final project. Time is limited — job alongside 4 courses.
 
 **Knowledge profile:**
-- Strong: energy market fundamentals, futures, term structure, contango/backwardation, crack spreads, hedge ratios, GARCH conceptually, cost of carry, beta, rolling statistics, Fed rate cycles, dollar strength, PADD regions
+- Medium: energy market fundamentals, futures, term structure, contango/backwardation, crack spreads, hedge ratios, GARCH conceptually, cost of carry, beta, rolling statistics, Fed rate cycles, dollar strength, PADD regions
 - Learning: R programming, golem framework, Shiny reactivity, modularization
 
 ---
@@ -30,7 +30,7 @@ User instructions (this file) take highest priority over skill instructions.
 
 **Do NOT write code unless explicitly asked.** They are learning by doing. Guide the what and why, let them write the how.
 
-**Override rule:** If the user says "override", write the code. Reserve for mundane/boilerplate work — not core logic the professor might ask about live.
+**Override rule:** If the user says "override", "do it for me", or expresses time pressure, write the code. Reserve for mundane/boilerplate work — the goal is for the user to understand and own the core logic of the app.
 
 **Challenge their understanding.** Don't accept vague answers. Ask follow-up questions. Push back on incorrect assumptions.
 
@@ -76,10 +76,12 @@ The app tells the story of energy market dynamics, co-dynamics, seasonality, vol
 
 ## Build Progress
 
-- **Plan A (Foundation functions):** COMPLETE as of 2026-03-30
-- **Plan B (Modules + app wiring):** IN PROGRESS — starting with `mod_data.R`
-- **Plan C (Complex modules):** Not started
-- **Plan D (Integration):** Not started
+**Status: App complete as of 2026-04-03.** All modules implemented with real data, narratives, and charts. Tests passing. Docker + GitHub Actions deployment configured.
+
+- **Plan A (Foundation functions):** COMPLETE
+- **Plan B (Modules + app wiring):** COMPLETE
+- **Plan C (Complex modules):** COMPLETE
+- **Plan D (Integration):** COMPLETE
 
 ---
 
@@ -114,6 +116,15 @@ remotes::install_github("risktoollib/RTL")
 4. How seasonality impacts market dynamics
 5. Hedge ratio dynamics across term structure and across markets (as a market maker)
 
+## Completeness Requirements (from assignment)
+
+- Reside in a **private GitHub repository** with the professor added as a collaborator
+- Use **GitHub Actions** to deploy the app via a Docker container (workflow in `.github/workflows/docker-deploy.yml`, pushes to `sefi320/golem-t:latest` on Docker Hub)
+- Be a golem app as a package using the **small R strategy**, passing data between modules
+- Be **modular** — top of UI allows user to select markets and updates the story across individual and cross-market tabs
+- Share the **AI context file (CLAUDE.md)** as part of the private repository
+- Professor runs the app with: `docker run -p 3838:3838 sefi320/golem-t:latest`
+
 ---
 
 ## App Architecture
@@ -142,8 +153,6 @@ remotes::install_github("risktoollib/RTL")
 - **GARCH** only for single selected contract (too slow for all 36). Uses `RTL::garch()` wrapper
 - **Rolling beta** = hedge ratio — `series_y` is the exposure, `series_x` is the hedge instrument
 - **Calculations use log returns** except CL which uses diff returns (negative prices in Apr 2020)
-- **Synchronized animation** on co-dynamics tab — one play button controls PADD map + CL price chart
-- **Sequential build chart** on co-dynamics tab — "Next" button adds one layer at a time
 - **Plotly** for all interactive and animated charts
 - **EIA PADD data is core** — PADD storage map synchronized with CL price is a key visualization
 - **CMT on its own tab** — rate cycle chart replaces seasonality heatmap
@@ -197,7 +206,7 @@ Commodity docs: `CL - Crude Oil.md`, `NG - Natural Gas.md`, `BRN - Brent Crude.m
 
 ## Testing Requirements
 
-**Unit tests:** Every `fct_` file has a test in `tests/testthat/`. Run with `devtools::test()`.
+**Unit tests:** Every computation `fct_` file has a test in `tests/testthat/`. Plot functions (`fct_plot_*.R`) are intentionally untested — they are thin wrappers around plotly with no logic to verify. Run with `devtools::test()`.
 
 **App tests:** Run `golem::run_dev()` after every significant change. Verify all tabs render and reactive data flow works end to end.
 
@@ -220,4 +229,4 @@ Commodity docs: `CL - Crude Oil.md`, `NG - Natural Gas.md`, `BRN - Brent Crude.m
 
 ## Presentation Context
 
-8-minute live demo, no notes or slides. Audience = non-technical senior in Risk Management / Trading. Professor may ask student to modify code live to verify understanding.
+8-minute live demo, no notes or slides. Audience = non-technical senior in Risk Management / Trading. The app is primarily the student's own work — they understand the logic, the data, and the market narratives behind every chart.

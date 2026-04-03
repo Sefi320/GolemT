@@ -1,6 +1,6 @@
 #' Co-Dynamics Module UI
 #' @param id Module namespace id
-#' @export
+
 mod_codynamics_ui <- function(id) {
   ns <- NS(id)
   div(
@@ -48,7 +48,7 @@ mod_codynamics_ui <- function(id) {
 #' Co-Dynamics Module Server
 #' @param id Module namespace id
 #' @param app_data Reactive data list from mod_data_server
-#' @export
+
 
 mod_codynamics_server <- function(id, app_data) {
   moduleServer(id, function(input, output, session) {
