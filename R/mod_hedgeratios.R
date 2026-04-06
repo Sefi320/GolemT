@@ -17,15 +17,39 @@ mod_hedgeratios_ui <- function(id) {
     ),
     bslib::card(
       bslib::card_header("RB-CL Rolling Beta — Single Instrument Hedge Failure"),
-      plotly::plotlyOutput(ns("rb_cl_beta"))
+      plotly::plotlyOutput(ns("rb_cl_beta")),
+      tags$ul(style = "margin-top: 12px;",
+        tags$li("RBOB gasoline is a refined product of crude oil — under normal conditions, RB and CL move together and the hedge ratio (beta) is stable near 1."),
+        tags$li("COVID broke this relationship: demand for refined products (driving) collapsed faster than crude demand, while CL was simultaneously hit by a storage crisis. RB did not go negative; CL did. The two markets temporarily decoupled."),
+        tags$li("This is basis risk in practice — the hedge instrument and the exposure stopped moving together precisely when the hedge was most needed.")
+      )
     ),
     bslib::card(
       bslib::card_header("NG01-NG06 Rolling Beta — Uri 2021"),
-      plotly::plotlyOutput(ns("ng_beta"))
+      plotly::plotlyOutput(ns("ng_beta")),
+      tags$ul(style = "margin-top: 12px;",
+        tags$li("The rolling beta between NG01 and NG06 is highly unstable — it spends extended periods near zero, meaning the front contract provides little to no hedging value for a deferred position. A fixed hedge ratio assumption is not supported by this data."),
+        tags$li("Notable periods: beta collapsed through mid-2020 into early 2021; recovered partially around Uri (Feb 2021) and the European gas crisis (Oct 2021) when systemic shocks repriced the full curve; then declined again through 2022."),
+        tags$li("There is no reliable cross-commodity hedge for natural gas. Alternatives used in practice include weather derivatives (degree-day contracts) and power derivatives, which address the demand drivers directly rather than proxying through another energy commodity.")
+      )
+    ),
+    bslib::card(
+      bslib::card_header("3-2-1 Crack Spread — Refinery Margin"),
+      plotly::plotlyOutput(ns("crack_spread")),
+      tags$ul(style = "margin-top: 12px;",
+        tags$li("The 3-2-1 crack spread estimates the gross refining margin: for every 3 barrels of crude processed, a refinery yields approximately 2 barrels of gasoline (RB) and 1 barrel of heating oil (HO). The spread = (2\u00d7RB + 1\u00d7HO \u2212 3\u00d7CL) / 3, with RB and HO converted from USD/gallon to USD/barrel (\u00d742)."),
+        tags$li("A refiner is structurally long crude and short refined products. Hedging the crack spread locks in the margin: sell RB and HO futures, buy CL futures in a 2:1:3 ratio."),
+        tags$li("Crack spread volatility is driven by demand shocks (COVID spring 2020 collapsed it), supply disruptions (Ukraine 2022 spiked it as European refined product supply tightened), and seasonal refinery turnarounds.")
+      )
     ),
     bslib::card(
       bslib::card_header("CL Term Structure Rolling Betas vs CL01"),
-      plotly::plotlyOutput(ns("cl_term_beta"))
+      plotly::plotlyOutput(ns("cl_term_beta")),
+      tags$ul(style = "margin-top: 12px;",
+        tags$li("Near-term contracts (CL02, CL03) carry betas close to 1 — they move almost in lockstep with the front month. Longer-dated contracts (CL12, CL24) have lower betas — they are more insulated from front-month supply and storage shocks."),
+        tags$li("April 2020: all betas collapsed to near zero simultaneously — including CL24. When CL01 goes negative and produces extreme returns, the beta regression breaks down across the entire curve, not just the front end."),
+        tags$li("The appropriate hedge ratio varies across the curve. Using a single fixed ratio to hedge across maturities introduces systematic error — particularly in volatile, event-driven markets.")
+      )
     )
   )
 }
@@ -56,6 +80,43 @@ mod_hedgeratios_server <- function(id, app_data) {
     cl_returns <- shiny::reactive({
       filter_futures(app_data()$prices, "CL", contracts = c(1, 2, 3, 6, 12, 24)) %>%
         calc_daily_returns(method = "diff")
+    })
+
+
+    output$crack_spread <- plotly::renderPlotly({
+
+      cs <- calc_crack_spread(app_data()$prices)
+
+      covid_date  <- as.Date("2020-03-11")
+      ukraine_date <- as.Date("2022-02-24")
+
+      plotly::plot_ly(cs, x = ~date, y = ~crack_spread,
+                      type = "scatter", mode = "lines",
+                      name = "3-2-1 Crack Spread",
+                      line = list(color = "steelblue", width = 2)) %>%
+        plotly::layout(
+          shapes = list(
+            list(type = "line", x0 = covid_date, x1 = covid_date,
+                 y0 = 0, y1 = 1, yref = "paper",
+                 line = list(color = "firebrick", dash = "dash", width = 1)),
+            list(type = "line", x0 = ukraine_date, x1 = ukraine_date,
+                 y0 = 0, y1 = 1, yref = "paper",
+                 line = list(color = "firebrick", dash = "dash", width = 1))
+          ),
+          annotations = list(
+            list(x = covid_date, y = 1, yref = "paper",
+                 text = "COVID declared", showarrow = FALSE,
+                 textangle = -90, xanchor = "right",
+                 font = list(size = 9, color = "firebrick")),
+            list(x = ukraine_date, y = 1, yref = "paper",
+                 text = "Russia invades Ukraine", showarrow = FALSE,
+                 textangle = -90, xanchor = "right",
+                 font = list(size = 9, color = "firebrick"))
+          ),
+          xaxis     = list(title = ""),
+          yaxis     = list(title = "Crack Spread (USD/bbl)"),
+          hovermode = "x unified"
+        )
     })
 
 

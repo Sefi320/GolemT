@@ -9,13 +9,22 @@ mod_codynamics_ui <- function(id) {
 
     bslib::card(
       bslib::card_header("Cushing Storage vs WTI Price — COVID 2020"),
-      plotly::plotlyOutput(ns("padd2_cl_chart"))
+      plotly::plotlyOutput(ns("padd2_cl_chart")),
+      tags$ul(style = "margin-top: 12px;",
+        tags$li("PADD 2 is the Cushing, Oklahoma storage hub — the physical delivery point for WTI futures. When storage fills, sellers have nowhere to deliver physical barrels."),
+        tags$li("COVID demand collapse (March 2020) drove inventory to capacity limits. By April 20, front-month WTI hit \u221237.63/bbl: sellers were paying buyers to take delivery. This chart shows the direct causal link between physical inventory and financial price.")
+      )
     ),
 
 
     bslib::card(
       bslib::card_header("BRN-CL Spread — Ukraine 2022"),
-      plotly::plotlyOutput(ns("brn_cl_spread"))
+      plotly::plotlyOutput(ns("brn_cl_spread")),
+      tags$ul(style = "margin-top: 12px;",
+        tags$li("The raw spread (BRN \u2212 CL) conflates the true Brent premium with the cost to move a barrel from landlocked Cushing to Houston export terminals."),
+        tags$li("HTT is the WTI Houston \u2212 WTI Cushing differential \u2014 it captures pipeline transport friction. Subtracting HTT isolates the true Brent premium: BRN \u2212 (CL + HTT)."),
+        tags$li("Russia\u2019s invasion (February 2022) drove a sharp spread blowout. Brent \u2014 the global benchmark \u2014 repriced faster and higher as markets priced in European supply disruption and sanctions risk.")
+      )
     ),
 
 
@@ -34,14 +43,14 @@ mod_codynamics_ui <- function(id) {
 
     bslib::card(
       bslib::card_header("BRN vs NG Rolling Volatility — Ukraine 2022"),
-      plotly::plotlyOutput(ns("brn_ng_vol"))
+      plotly::plotlyOutput(ns("brn_ng_vol")),
+      tags$ul(style = "margin-top: 12px;",
+        tags$li("Russia\u2019s invasion simultaneously disrupted global crude supply (Brent) and European natural gas pipelines \u2014 two separate transmission channels, one geopolitical shock."),
+        tags$li("NG volatility surged harder than BRN: Europe had heavy pipeline dependency on Russia with limited alternative supply. The vol spike reflects illiquidity and repricing of a structurally constrained market."),
+        tags$li("Adjust the rolling window to see how the shock propagated \u2014 vol peaked within weeks, then mean-reverted as markets absorbed the new supply reality.")
+      )
     ),
 
-    bslib::card(
-      bslib::card_header("NG-HO Rolling Correlation — Winter Storm Uri 2021"),
-      plotly::plotlyOutput(ns("ng_ho_cor")),
-      plotly::plotlyOutput(ns("ng_ho_prices"))
-    )
   )
 }
 
@@ -188,85 +197,6 @@ mod_codynamics_server <- function(id, app_data) {
     })
 
 
-    output$ng_ho_cor <- plotly::renderPlotly({
-
-      returns <- dplyr::bind_rows(
-        filter_futures(app_data()$prices, "NG", contracts = 1) %>% calc_daily_returns(),
-        filter_futures(app_data()$prices, "HO", contracts = 1) %>% calc_daily_returns()
-      ) %>%
-        dplyr::filter(date >= as.Date("2020-01-01"), date <= as.Date("2022-06-30"))
-
-      cor_df <- calc_rolling_correlation(returns, "NG01", "HO01",
-                                         window = input$rolling_window)
-
-      uri_date <- as.Date("2021-02-10")
-
-      plotly::plot_ly(cor_df, x = ~date, y = ~rolling_correlation,
-                      type = "scatter", mode = "lines",
-                      name = "NG01 vs HO01",
-                      line = list(color = "steelblue", width = 2)) %>%
-        plotly::layout(
-          shapes = list(
-            list(type = "line", x0 = uri_date, x1 = uri_date,
-                 y0 = 0, y1 = 1, yref = "paper",
-                 line = list(color = "firebrick", dash = "dash", width = 1))
-          ),
-          annotations = list(
-            list(x = uri_date, y = 1, yref = "paper",
-                 text = "Winter Storm Uri", showarrow = FALSE,
-                 textangle = -90, xanchor = "right",
-                 font = list(size = 9, color = "firebrick"))
-          ),
-          xaxis     = list(title = ""),
-          yaxis     = list(title = "Rolling Correlation", range = c(-1, 1)),
-          hovermode = "x unified"
-        )
-    })
-
-
-    output$ng_ho_prices <- plotly::renderPlotly({
-
-      base_date <- as.Date("2021-01-01")
-
-      ng <- filter_futures(app_data()$prices, "NG", contracts = 1) %>%
-        dplyr::filter(date >= as.Date("2021-01-04"), date <= as.Date("2022-06-30")) %>%
-        dplyr::select(date, value)
-
-      ho <- filter_futures(app_data()$prices, "HO", contracts = 1) %>%
-        dplyr::filter(date >= as.Date("2021-01-04"), date <= as.Date("2022-06-30")) %>%
-        dplyr::select(date, value)
-
-      ng_base <- ng %>% dplyr::filter(date >= base_date) %>% dplyr::slice(1) %>% dplyr::pull(value)
-      ho_base <- ho %>% dplyr::filter(date >= base_date) %>% dplyr::slice(1) %>% dplyr::pull(value)
-
-      combined <- dplyr::bind_rows(
-        ng %>% dplyr::mutate(indexed = value / ng_base * 100, series = "NG01"),
-        ho %>% dplyr::mutate(indexed = value / ho_base * 100, series = "HO01")
-      )
-
-      uri_date <- as.Date("2021-02-10")
-
-      plotly::plot_ly(combined, x = ~date, y = ~indexed, color = ~series,
-                      type = "scatter", mode = "lines",
-                      colors = c("NG01" = "steelblue", "HO01" = "orange")) %>%
-        plotly::layout(
-          shapes = list(
-            list(type = "line", x0 = uri_date, x1 = uri_date,
-                 y0 = 0, y1 = 1, yref = "paper",
-                 line = list(color = "firebrick", dash = "dash", width = 1))
-          ),
-          annotations = list(
-            list(x = uri_date, y = 1, yref = "paper",
-                 text = "Winter Storm Uri", showarrow = FALSE,
-                 textangle = -90, xanchor = "right",
-                 font = list(size = 9, color = "firebrick"))
-          ),
-          xaxis     = list(title = ""),
-          yaxis     = list(title = "Indexed Price (Jan 2021 = 100)"),
-          hovermode = "x unified",
-          legend    = list(orientation = "h", y = -0.15)
-        )
-    })
 
   })
 }
