@@ -229,11 +229,11 @@ mod_codynamics_server <- function(id, app_data) {
       base_date <- as.Date("2021-01-01")
 
       ng <- filter_futures(app_data()$prices, "NG", contracts = 1) %>%
-        dplyr::filter(date >= as.Date("2020-01-01"), date <= as.Date("2022-06-30")) %>%
+        dplyr::filter(date >= as.Date("2021-01-04"), date <= as.Date("2022-06-30")) %>%
         dplyr::select(date, value)
 
       ho <- filter_futures(app_data()$prices, "HO", contracts = 1) %>%
-        dplyr::filter(date >= as.Date("2020-01-01"), date <= as.Date("2022-06-30")) %>%
+        dplyr::filter(date >= as.Date("2021-01-04"), date <= as.Date("2022-06-30")) %>%
         dplyr::select(date, value)
 
       ng_base <- ng %>% dplyr::filter(date >= base_date) %>% dplyr::slice(1) %>% dplyr::pull(value)

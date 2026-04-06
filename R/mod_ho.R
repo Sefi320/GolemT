@@ -75,7 +75,7 @@ mod_ho_server <- function(id,app_data) {
           cmdty = "HO",
           contracts = input$contract_select)) %>%
         dplyr::filter(
-          date >= as.Date("2017-07-01"),
+          date >= as.Date("2019-01-01"),
           date <= as.Date("2023-07-31")),
       series_name = paste0("HO0", input$contract_select)))
 

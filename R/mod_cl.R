@@ -48,7 +48,6 @@ mod_cl_server <- function(id,app_data) {
       tags$li("WTI is priced at Cushing, Oklahoma — a landlocked pipeline hub with no direct access to export terminals. When Cushing fills, WTI weakens against Brent."),
       tags$li("April 20, 2020: COVID demand collapse met physical storage capacity limits. WTI front month hit -$37.63/bbl — the first negative commodity price in history."),
       tags$li("Biannual refinery turnaround (spring and fall) suppresses crude demand and creates predictable seasonal volatility spikes — visible in the seasonality heatmap."),
-      tags$li("The EIA storage chart shows PADD 2 inventory vs the 5-year seasonal average. Deviations above the average are bearish; below are bullish."),
       tags$li("Volatility surface: the front contract (CL01) carries the most vol. Vol declines with maturity as supply/demand shocks are absorbed over time.")
     ))
 
@@ -75,7 +74,7 @@ mod_cl_server <- function(id,app_data) {
         cmdty = "CL",
         contracts = input$contract_select)) %>%
         dplyr::filter(
-          date >= as.Date("2017-07-01"),
+          date >= as.Date("2019-01-01"),
           date <= as.Date("2023-07-31")),
       series_name = paste0("CL0", input$contract_select)))
 

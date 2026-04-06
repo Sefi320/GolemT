@@ -76,7 +76,7 @@ mod_rb_server <- function(id,app_data) {
           cmdty = "RB",
           contracts = input$contract_select)) %>%
         dplyr::filter(
-          date >= as.Date("2017-07-01"),
+          date >= as.Date("2019-01-01"),
           date <= as.Date("2023-07-31")),
       series_name = paste0("RB0", input$contract_select)))
   })
