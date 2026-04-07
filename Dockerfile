@@ -16,17 +16,18 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install remotes so we can install from GitHub
-RUN R -e "install.packages('remotes', repos='https://cran.rstudio.com/')"
+RUN R -e "install.packages('remotes')"
 
-# Install all CRAN dependencies (excluding rugarch — installed separately below)
+# Install all CRAN dependencies
+# No repos= override — uses rocker's default Posit Package Manager (pre-built binaries, no compilation)
 RUN R -e "install.packages(c( \
     'arrow', 'bslib', 'config', 'dplyr', 'fabletools', 'feasts', \
     'golem', 'lubridate', 'plotly', 'shiny', 'shinipsum', 'slider', \
     'stringr', 'tsibble', 'magrittr', 'purrr', 'tidyr' \
-    ), repos='https://cran.rstudio.com/')"
+    ))"
 
 # Install rugarch separately so failures are visible and not silently swallowed
-RUN R -e "install.packages('rugarch', repos='https://cran.rstudio.com/', dependencies=TRUE)" && \
+RUN R -e "install.packages('rugarch', dependencies=TRUE)" && \
     R -e "library(rugarch); message('rugarch OK: ', packageVersion('rugarch'))"
 
 # Install RTL from GitHub (development version — not on CRAN)
