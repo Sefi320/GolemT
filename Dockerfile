@@ -18,12 +18,16 @@ RUN apt-get update && apt-get install -y \
 # Install remotes so we can install from GitHub
 RUN R -e "install.packages('remotes', repos='https://cran.rstudio.com/')"
 
-# Install all CRAN dependencies
+# Install all CRAN dependencies (excluding rugarch — installed separately below)
 RUN R -e "install.packages(c( \
     'arrow', 'bslib', 'config', 'dplyr', 'fabletools', 'feasts', \
     'golem', 'lubridate', 'plotly', 'shiny', 'shinipsum', 'slider', \
-    'stringr', 'tsibble', 'magrittr', 'purrr', 'tidyr', 'rugarch' \
+    'stringr', 'tsibble', 'magrittr', 'purrr', 'tidyr' \
     ), repos='https://cran.rstudio.com/')"
+
+# Install rugarch separately so failures are visible and not silently swallowed
+RUN R -e "install.packages('rugarch', repos='https://cran.rstudio.com/', dependencies=TRUE)" && \
+    R -e "library(rugarch); message('rugarch OK: ', packageVersion('rugarch'))"
 
 # Install RTL from GitHub (development version — not on CRAN)
 RUN R -e "remotes::install_github('risktoollib/RTL')"

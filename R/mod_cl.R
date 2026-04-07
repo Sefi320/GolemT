@@ -59,7 +59,7 @@ mod_cl_server <- function(id,app_data) {
           "CL")))
 
     output$curve_animation <- shiny::renderImage({
-      list(src = app_sys("extdata/cl_curve.gif"), contentType = "image/gif")
+      list(src = app_sys("extdata/CL_curve.gif"), contentType = "image/gif")
     }, deleteFile = FALSE)
 
     outputOptions(output, "curve_animation", suspendWhenHidden = FALSE)

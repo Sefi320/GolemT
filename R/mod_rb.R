@@ -60,7 +60,7 @@ mod_rb_server <- function(id,app_data) {
           "RB")))
 
     output$curve_animation <- shiny::renderImage({
-      list(src = app_sys("extdata/rb_curve.gif"), contentType = "image/gif")
+      list(src = app_sys("extdata/RB_curve.gif"), contentType = "image/gif")
     }, deleteFile = FALSE)
 
     outputOptions(output, "curve_animation", suspendWhenHidden = FALSE)

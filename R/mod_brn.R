@@ -62,7 +62,7 @@ mod_brn_server <- function(id,app_data) {
           "BRN")))
 
     output$curve_animation <- shiny::renderImage({
-      list(src = app_sys("extdata/brn_curve.gif"), contentType = "image/gif")
+      list(src = app_sys("extdata/BRN_curve.gif"), contentType = "image/gif")
     }, deleteFile = FALSE)
 
     outputOptions(output, "curve_animation", suspendWhenHidden = FALSE)

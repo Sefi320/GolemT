@@ -67,7 +67,7 @@ mod_ng_server <- function(id,app_data) {
           "NG")))
 
     output$curve_animation <- shiny::renderImage({
-      list(src = app_sys("extdata/ng_curve.gif"), contentType = "image/gif")
+      list(src = app_sys("extdata/NG_curve.gif"), contentType = "image/gif")
     }, deleteFile = FALSE)
 
     outputOptions(output, "curve_animation", suspendWhenHidden = FALSE)

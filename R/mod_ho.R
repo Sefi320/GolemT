@@ -59,7 +59,7 @@ mod_ho_server <- function(id,app_data) {
           "HO")))
 
     output$curve_animation <- shiny::renderImage({
-      list(src = app_sys("extdata/ho_curve.gif"), contentType = "image/gif")
+      list(src = app_sys("extdata/HO_curve.gif"), contentType = "image/gif")
     }, deleteFile = FALSE)
 
     outputOptions(output, "curve_animation", suspendWhenHidden = FALSE)
